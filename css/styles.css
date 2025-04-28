@@ -6394,3 +6394,22 @@ a, button, .icon {
   }
 }
 
+html {
+    scroll-behavior: smooth;
+}
+.cta-btn {
+    display: inline-block;
+    background: #0084ff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 6px;
+    transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover, .cta-btn:focus {
+    background: #005fcc;
+    transform: scale(1.07);
+}
