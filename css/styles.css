@@ -3617,18 +3617,29 @@ a, button, .icon {
 .info-grid {
     max-width: 1000px;
     margin: 0 auto;
-        padding: 0 2rem;
+    padding: 0 2rem;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 420px 1fr !important;
     gap: 3rem;
     align-items: start;
-    }
-    
+}
+
+.eligibility {
+    background-color: #ffffff;
+    padding: 2.5rem 2.5rem 2.5rem 3.5rem !important;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
 .info-column {
     display: flex;
     flex-direction: column;
-        gap: 2.5rem;
-    }
+    gap: 2.5rem;
+}
 
 .eligibility, .benefits, .learn-section, .details-section {
     background-color: #ffffff;
@@ -3677,7 +3688,7 @@ a, button, .icon {
     }
 
     .info-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
         max-width: 600px;
         gap: 2rem;
         padding: 0 1.5rem;
@@ -3821,7 +3832,7 @@ a, button, .icon {
     position: absolute;
     left: 0;
     color: #007bff;
-        font-size: 1.4rem;
+    font-size: 1.4rem;
     line-height: 1;
     top: 0;
     transition: transform 0.3s ease;
@@ -3876,7 +3887,7 @@ a, button, .icon {
 .powerup-hero h1 {
     font-size: 4rem;
     font-weight: 800;
-        margin-bottom: 1rem;
+    margin-bottom: 1rem;
     line-height: 1.1;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: -0.5px;
@@ -4034,7 +4045,7 @@ a, button, .icon {
 }
 
 .powerup-about p {
-        font-size: 1rem;
+    font-size: 1rem;
     line-height: 1.5;
     color: #444;
     margin-bottom: 1.2rem;
@@ -5427,13 +5438,11 @@ a, button, .icon {
     align-items: center;
 }
 
-.sponsor-group,
-.implementer-group {
+.sponsor-group, .implementer-group {
     text-align: left;
 }
 
-.sponsor-group h2,
-.implementer-group h2 {
+.sponsor-group h2, .implementer-group h2 {
     font-size: 2.8rem;
     font-weight: 700;
     color: #1a1a1a;
@@ -5470,8 +5479,7 @@ a, button, .icon {
         gap: 4rem;
     }
 
-    .sponsor-group h2,
-    .implementer-group h2 {
+    .sponsor-group h2, .implementer-group h2 {
         font-size: 2.4rem;
         margin-bottom: 2rem;
     }
@@ -5487,8 +5495,7 @@ a, button, .icon {
         gap: 4rem;
     }
 
-    .sponsor-group h2,
-    .implementer-group h2 {
+    .sponsor-group h2, .implementer-group h2 {
         font-size: 2.2rem;
     }
 }
@@ -5498,8 +5505,7 @@ a, button, .icon {
         padding: 3rem 1.5rem;
     }
 
-    .sponsor-group h2,
-    .implementer-group h2 {
+    .sponsor-group h2, .implementer-group h2 {
         font-size: 2rem;
     }
 
@@ -6128,3 +6134,263 @@ a, button, .icon {
     padding: 32px 12px 28px 12px;
   }
 }
+
+.stem-hero {
+  position: relative;
+  min-height: 60vh;
+  background: url('https://img.freepik.com/free-vector/stem-logo-banner-with-learning-icon-elements_1308-67977.jpg?w=740&t=st=1721440197~exp=1721440797~hmac=36ea21866749a17cae535b61d8e30b5f337cb1f53e43f52762e4bdcd8396f357') center center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1;
+  padding-left: 5vw;
+}
+
+.stem-hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 2;
+}
+
+.stem-hero-content {
+  position: relative;
+  z-index: 3;
+  background: rgba(20,20,20,0.7);
+  border-radius: 8px;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 700px;
+  margin: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  left: 0;
+}
+
+.stem-hero-content h1 {
+  color: #fff;
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.stem-hero-content p {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.stem-hero-btn {
+  display: inline-block;
+  background: #3973f7;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(57,115,247,0.15);
+  letter-spacing: 1px;
+}
+
+.stem-hero-btn:hover {
+  background: #2451a6;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(57,115,247,0.25);
+}
+
+@media (max-width: 768px) {
+  .stem-hero {
+    padding-left: 0.5rem;
+    justify-content: flex-start;
+  }
+  .stem-hero-content {
+    padding: 1.5rem 1rem 1.2rem 1rem;
+    max-width: 98vw;
+    margin: 0;
+  }
+  .stem-hero-content h1 {
+    font-size: 2.1rem;
+  }
+  .stem-hero-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stem-hero-content h1 {
+    font-size: 1.3rem;
+  }
+  .stem-hero-content p {
+    font-size: 0.95rem;
+  }
+  .stem-hero-btn {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+.stem-about-section {
+  max-width: 1200px;
+  margin: 48px auto 0 auto;
+  padding: 0 2vw 32px 2vw;
+}
+
+.stem-about-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.stem-about-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.stem-about-img-col {
+  flex: 1 1 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stem-about-img-col img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  background: #fff;
+}
+
+.stem-about-text-col {
+  flex: 1 1 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 260px;
+}
+
+.stem-about-text-col h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+
+.stem-about-text-col p {
+  font-size: 1.08rem;
+  color: #222;
+  margin-bottom: 0.7rem;
+  line-height: 1.7;
+}
+
+.stem-about-text-col ul {
+  margin: 0 0 1.1rem 1.2rem;
+  padding: 0;
+  color: #222;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.stem-about-text-col ul li {
+  margin-bottom: 0.3rem;
+}
+
+
+@media (max-width: 900px) {
+  .stem-about-row, .stem-about-row.reverse {
+    flex-direction: column;
+    gap: 28px;
+    margin-bottom: 36px;
+  }
+  .stem-about-img-col, .stem-about-text-col {
+    max-width: 100%;
+    width: 100%;
+  }
+  .stem-about-img-col img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .stem-about-section {
+    padding: 0 0.5rem 24px 0.5rem;
+  }
+  .stem-about-row, .stem-about-row.reverse {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stem-about-text-col h2 {
+    font-size: 1.15rem;
+  }
+  .stem-about-text-col p, .stem-about-text-col ul {
+    font-size: 0.98rem;
+  }
+  .stem-about-btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-section {
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+  }
+  .register-btn {
+    width: 100%;
+    max-width: 350px;
+    font-size: 1.1rem;
+    padding: 1.1rem 0;
+    margin: 1.2rem auto 0 auto;
+    display: block;
+  }
+}
+@media (max-width: 576px) {
+  .register-section {
+    padding: 1rem 0.2rem;
+  }
+  .register-btn {
+    font-size: 1rem;
+    padding: 1rem 0;
+    max-width: 100%;
+  }
+  .eligibility, .benefits, .learn-section, .details-section {
+    padding: 1.1rem !important;
+    font-size: 0.98rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-section .register-btn {
+    width: 100% !important;
+    max-width: 350px !important;
+    font-size: 1.1rem !important;
+    padding: 1.1rem 0 !important;
+    margin: 1.2rem auto 0 auto !important;
+    display: block !important;
+  }
+}
+@media (max-width: 576px) {
+  .register-section .register-btn {
+    font-size: 1rem !important;
+    padding: 1rem 0 !important;
+    max-width: 100% !important;
+  }
+  .program-info .eligibility, 
+  .program-info .benefits, 
+  .program-info .learn-section, 
+  .program-info .details-section {
+    padding: 1.1rem !important;
+    font-size: 0.98rem !important;
+  }
+}
+
