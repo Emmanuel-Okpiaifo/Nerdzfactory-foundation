@@ -252,3 +252,19 @@ if (wdepSlides.length > 0 && wdepDots.length > 0) {
     showWdepSlide(0);
     setInterval(nextWdepSlide, 5000); // Change slide every 5 seconds
 }
+
+function animateBybProgramCardsOnScroll() {
+  const cards = document.querySelectorAll('.byb-program-card');
+  const trigger = window.innerHeight * 0.92;
+
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < trigger) {
+      card.classList.add('animate-in');
+    }
+  });
+}
+
+window.addEventListener('scroll', animateBybProgramCardsOnScroll);
+window.addEventListener('resize', animateBybProgramCardsOnScroll);
+window.addEventListener('DOMContentLoaded', animateBybProgramCardsOnScroll);
