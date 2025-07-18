@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Nerdzfactory Foundation</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="./img/cropped-nf_logo-1.png">
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <span>+234 8108269069</span>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/nerdzfactoryorg/"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/nerdzfactoryorg?t=nNIe24BD69MhKHI2uW7aDg&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/nerdzfactoryorg?igshid=YmMyMTA2M2Y%3D"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/nerdzfactoryorg/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/@nerdzfactoryfoundation4932"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <nav>
+            <div class="logo">
+                <img src="./img/nf_logo-1-300x64.png" alt="Nerdzfactory Logo">
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="involved.html">Get Involved</a></li>
+                <li><a href="https://nerdzfactory.org/opportunities/">Opportunities</a></li>
+            </ul>
+            <a href="involved.html" class="apply-btn">Apply</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="gallery-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Our Gallery</h1>
+                <p>Capturing moments of impact, learning, and transformation across all our programs.</p>
+            </div>
+        </section>
+
+        <section class="gallery-content">
+            <div class="container">
+                <div class="gallery-filters">
+                    <button class="filter-btn active" data-filter="all">All Images</button>
+                    <button class="filter-btn" data-filter="programs">Programs</button>
+                    <button class="filter-btn" data-filter="events">Events</button>
+                    <button class="filter-btn" data-filter="training">Training</button>
+                    <button class="filter-btn" data-filter="community">Community</button>
+                </div>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Loading gallery images...</p>
+                </div>
+
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Gallery images will be loaded here dynamically -->
+                </div>
+
+                <div class="gallery-pagination" id="galleryPagination">
+                    <!-- Pagination will be loaded here dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="stay-updated">
+        <div class="overlay"></div>
+        <div class="stay-updated-content">
+            <h2>Stay Updated</h2>
+            <p>Stay up to date on our entrepreneurs, events, research and more.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Reach Us</a></li>
+                    <li><a href="involved.html">Get Involved</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <div class="contact-info">
+                    <p><span>Address:</span> Plot 2b Insha Allah Street, Off Ramat Crescent, Ogudu</p>
+                    <p><span>Email:</span> info@nerdzfactory.org</p>
+                    <p><span>Phone:</span> +234 8108269069</p>
+                </div>
+            </div>
+            <div class="footer-section social-section">
+                <div class="social-links">
+                    <a href="https://www.facebook.com/nerdzfactoryorg/" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/nerdzfactoryorg?t=nNIe24BD69MhKHI2uW7aDg&s=09" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/nerdzfactoryorg?igshid=YmMyMTA2M2Y%3D" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/nerdzfactoryorg/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/@nerdzfactoryfoundation4932" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2025 NerdzFactory Foundation</p>
+        </div>
+    </footer>
+    <script src="./js/main.js"></script>
+    <script>
+        // Gallery API functionality
+        class GalleryAPI {
+            constructor() {
+                this.baseURL = 'https://nerdzfactory.org/wp-json/wp/v2';
+                this.imagesPerPage = 12;
+                this.currentPage = 1;
+                this.currentFilter = 'all';
+                this.galleryGrid = document.getElementById('galleryGrid');
+                this.loadingSpinner = document.getElementById('loadingSpinner');
+                this.paginationContainer = document.getElementById('galleryPagination');
+                this.allFMImages = []; // Store all FM images
+                this.init();
+            }
+
+            async init() {
+                await this.loadImages();
+                this.setupEventListeners();
+            }
+
+            async loadImages() {
+                try {
+                    this.showLoading(true);
+                    
+                    // Test if WordPress API is accessible
+                    console.log('Testing WordPress API accessibility...');
+                    
+                    // Fetch media/images from WordPress REST API
+                    let url = `${this.baseURL}/media?per_page=100&page=${this.currentPage}&orderby=date&order=desc`;
+                    
+                    console.log('Fetching from URL:', url);
+                    
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    console.log('Response status:', response.status);
+                    console.log('Response headers:', response.headers);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const allImages = await response.json();
+                    console.log('Raw API response:', allImages);
+                    console.log('Total images fetched:', allImages.length);
+                    
+                    // Log first few images to see their structure
+                    if (allImages.length > 0) {
+                        console.log('First image structure:', allImages[0]);
+                        console.log('Sample image URLs:', allImages.slice(0, 3).map(img => img.source_url));
+                        
+                        // Show all image filenames to see what's available
+                        console.log('All image filenames:', allImages.map(img => {
+                            const urlParts = img.source_url.split('/');
+                            return urlParts[urlParts.length - 1];
+                        }));
+                        
+                        // Show all image titles
+                        console.log('All image titles:', allImages.map(img => img.title?.rendered || 'No title'));
+                    }
+                    
+                    // Filter images to only show those with "FM" in the filename
+                    const fmImages = allImages.filter(image => {
+                        const imageUrl = image.source_url.toLowerCase();
+                        const imageTitle = (image.title?.rendered || '').toLowerCase();
+                        const imageAlt = (image.alt_text || '').toLowerCase();
+                        
+                        // Extract filename from URL
+                        const urlParts = imageUrl.split('/');
+                        const filename = urlParts[urlParts.length - 1].toLowerCase();
+                        
+                        console.log('Checking image:', {
+                            url: imageUrl,
+                            filename: filename,
+                            title: imageTitle,
+                            alt: imageAlt,
+                            hasFM: filename.includes('fm') || imageTitle.includes('fm') || imageAlt.includes('fm')
+                        });
+                        
+                        // Check if "fm" appears in the filename, title, or alt text
+                        return filename.includes('fm') || 
+                               imageTitle.includes('fm') || 
+                               imageAlt.includes('fm');
+                    });
+
+                    console.log('All images:', allImages.length);
+                    console.log('FM images found:', fmImages.length);
+                    console.log('FM images:', fmImages);
+
+                    // Since WordPress media library doesn't contain FM images, use fallback
+                    if (fmImages.length === 0) {
+                        console.log('No FM images found in WordPress media library. Using fallback FM gallery images...');
+                        this.showFallbackImages();
+                    } else {
+                        this.allFMImages = fmImages;
+                        this.renderCurrentPageImages();
+                    }
+                    
+                } catch (error) {
+                    console.error('Error loading images:', error);
+                    console.log('API failed, showing fallback images...');
+                    this.showFallbackImages();
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            showFallbackImages() {
+                console.log('Showing confirmed working FM gallery images...');
+                
+                this.allFMImages = [
+                    // 2023/05 folder - confirmed working images
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_06117.jpg', title: { rendered: 'FM_06117' }, alt_text: 'FM_06117', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_03528.jpg', title: { rendered: 'FM_03528' }, alt_text: 'FM_03528', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_03443.jpg', title: { rendered: 'FM_03443' }, alt_text: 'FM_03443', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_02615.jpg', title: { rendered: 'FM_02615' }, alt_text: 'FM_02615', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_02611.jpg', title: { rendered: 'FM_02611' }, alt_text: 'FM_02611', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_02555.jpg', title: { rendered: 'FM_02555' }, alt_text: 'FM_02555', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_03575-scaled.jpg', title: { rendered: 'FM_03575' }, alt_text: 'FM_03575', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_02594.jpg', title: { rendered: 'FM_02594' }, alt_text: 'FM_02594', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_06011.jpg', title: { rendered: 'FM_06011' }, alt_text: 'FM_06011', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_02554.jpg', title: { rendered: 'FM_02554' }, alt_text: 'FM_02554', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_03569.jpg', title: { rendered: 'FM_03569' }, alt_text: 'FM_03569', date: '2023-05-01T10:00:00' },
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2023/05/FM_03452.jpg', title: { rendered: 'FM_03452' }, alt_text: 'FM_03452', date: '2023-05-01T10:00:00' },
+                    
+                    // 2025/02 folder - confirmed working
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2025/02/FM_09463-copy-scaled.jpg', title: { rendered: 'FM_09463' }, alt_text: 'FM_09463', date: '2025-02-01T10:00:00' },
+                    
+                    // 2025/03 folder - confirmed working
+                    { source_url: 'https://nerdzfactory.org/wp-content/uploads/2025/03/FM_08961-1-scaled.jpg', title: { rendered: 'FM_08961' }, alt_text: 'FM_08961', date: '2025-03-01T10:00:00' }
+                ];
+
+                console.log(`Total confirmed FM images loaded: ${this.allFMImages.length}`);
+                this.renderCurrentPageImages();
+            }
+
+            renderCurrentPageImages() {
+                // Calculate pagination
+                const totalPages = Math.ceil(this.allFMImages.length / this.imagesPerPage);
+                const startIndex = (this.currentPage - 1) * this.imagesPerPage;
+                const endIndex = startIndex + this.imagesPerPage;
+                const currentPageImages = this.allFMImages.slice(startIndex, endIndex);
+
+                console.log(`Showing page ${this.currentPage} of ${totalPages} (images ${startIndex + 1}-${Math.min(endIndex, this.allFMImages.length)} of ${this.allFMImages.length})`);
+
+                this.renderImages(currentPageImages);
+                this.renderPagination(totalPages);
+            }
+
+            renderImages(images) {
+                if (images.length === 0) {
+                    this.galleryGrid.innerHTML = `
+                        <div class="no-images">
+                            <h3>No Images Found</h3>
+                            <p>No images are currently available from the WordPress media library.</p>
+                            <p>Please check the browser console for debugging information.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.galleryGrid.innerHTML = images.map(image => {
+                    const imageUrl = image.source_url;
+                    const imageTitle = image.title?.rendered || image.alt_text || 'Gallery Image';
+                    const imageAlt = image.alt_text || imageTitle;
+                    const imageDate = new Date(image.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    // Extract the filename from the URL
+                    const urlParts = imageUrl.split('/');
+                    const filename = urlParts[urlParts.length - 1];
+                    const displayTitle = filename || imageTitle;
+
+                    // Determine category based on image filename or title
+                    const category = this.determineCategory(imageTitle, imageUrl);
+
+                    return `
+                        <div class="gallery-item" data-category="${category}">
+                            <img src="${imageUrl}" alt="${imageAlt}" loading="lazy" 
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                 onload="this.nextElementSibling.style.display='none';">
+                            <div class="image-error" style="display: none; align-items: center; justify-content: center; height: 200px; background: #f5f5f5; color: #666; text-align: center; padding: 20px;">
+                                <div>
+                                    <i class="fas fa-image" style="font-size: 2em; margin-bottom: 10px; color: #ccc;"></i>
+                                    <p>Image not available</p>
+                                    <small>${displayTitle}</small>
+                                </div>
+                            </div>
+                            <div class="gallery-overlay">
+                                <h3>${displayTitle}</h3>
+                                <p>${imageDate}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            determineCategory(title, url) {
+                const lowerTitle = title.toLowerCase();
+                const lowerUrl = url.toLowerCase();
+                
+                // Check for program-related keywords
+                if (lowerTitle.includes('program') || lowerTitle.includes('training') || 
+                    lowerUrl.includes('program') || lowerUrl.includes('training')) {
+                    return 'programs';
+                }
+                
+                // Check for event-related keywords
+                if (lowerTitle.includes('event') || lowerTitle.includes('workshop') || 
+                    lowerUrl.includes('event') || lowerUrl.includes('workshop')) {
+                    return 'events';
+                }
+                
+                // Check for training-related keywords
+                if (lowerTitle.includes('class') || lowerTitle.includes('session') || 
+                    lowerUrl.includes('class') || lowerUrl.includes('session')) {
+                    return 'training';
+                }
+                
+                // Check for community-related keywords
+                if (lowerTitle.includes('community') || lowerTitle.includes('group') || 
+                    lowerUrl.includes('community') || lowerUrl.includes('group')) {
+                    return 'community';
+                }
+                
+                // Default category
+                return 'programs';
+            }
+
+            renderPagination(totalPages) {
+                if (totalPages <= 1) {
+                    this.paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '';
+                
+                // Previous button
+                if (this.currentPage > 1) {
+                    paginationHTML += `<button class="pagination-btn prev" data-page="${this.currentPage - 1}">Previous</button>`;
+                }
+
+                // Page numbers with smart ellipsis
+                for (let i = 1; i <= totalPages; i++) {
+                    // Show first page, last page, current page, and pages around current
+                    if (i === 1 || 
+                        i === totalPages || 
+                        (i >= this.currentPage - 2 && i <= this.currentPage + 2)) {
+                        paginationHTML += `<button class="pagination-btn ${i === this.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+                    } else if (i === this.currentPage - 3 || i === this.currentPage + 3) {
+                        paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+                    }
+                }
+
+                // Next button
+                if (this.currentPage < totalPages) {
+                    paginationHTML += `<button class="pagination-btn next" data-page="${this.currentPage + 1}">Next</button>`;
+                }
+
+                this.paginationContainer.innerHTML = paginationHTML;
+            }
+
+            setupEventListeners() {
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                        
+                        this.currentFilter = e.target.getAttribute('data-filter');
+                        this.filterImages();
+                    });
+                });
+
+                // Pagination buttons
+                this.paginationContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('pagination-btn')) {
+                        this.currentPage = parseInt(e.target.getAttribute('data-page'));
+                        this.renderCurrentPageImages();
+                    }
+                });
+            }
+
+            filterImages() {
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                
+                galleryItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    
+                    if (this.currentFilter === 'all' || category === this.currentFilter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease-in-out';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            showLoading(show) {
+                this.loadingSpinner.style.display = show ? 'flex' : 'none';
+                this.galleryGrid.style.display = show ? 'none' : 'grid';
+            }
+
+            showError() {
+                this.galleryGrid.innerHTML = `
+                    <div class="error-message">
+                        <h3>Error Loading Images</h3>
+                        <p>Sorry, we couldn't load the gallery images at this time. Please try again later.</p>
+                        <button onclick="location.reload()" class="retry-btn">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize gallery API when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new GalleryAPI();
+        });
+    </script>
+</body>
+</html> 

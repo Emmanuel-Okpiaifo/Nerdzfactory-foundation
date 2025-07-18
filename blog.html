@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Nerdzfactory Foundation</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="./img/cropped-nf_logo-1.png">
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <span>+234 8108269069</span>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/nerdzfactoryorg/"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/nerdzfactoryorg?t=nNIe24BD69MhKHI2uW7aDg&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/nerdzfactoryorg?igshid=YmMyMTA2M2Y%3D"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/nerdzfactoryorg/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/@nerdzfactoryfoundation4932"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <nav>
+            <div class="logo">
+                <img src="./img/nf_logo-1-300x64.png" alt="Nerdzfactory Logo">
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="involved.html">Get Involved</a></li>
+                <li><a href="https://nerdzfactory.org/opportunities/">Opportunities</a></li>
+            </ul>
+            <a href="involved.html" class="apply-btn">Apply</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="blog-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Our Blog</h1>
+                <p>Insights, stories, and updates from our journey of empowering communities through technology.</p>
+            </div>
+        </section>
+
+        <section class="blog-content">
+            <div class="container">
+                <div class="blog-filters">
+                    <button class="filter-btn active" data-filter="articles">Articles</button>
+                    <div class="posts-counter" id="postsCounter"></div>
+                </div>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Loading blog posts...</p>
+                </div>
+
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Blog posts will be loaded here dynamically -->
+                </div>
+
+                <div class="blog-pagination" id="blogPagination">
+                    <!-- Pagination will be loaded here dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="stay-updated">
+        <div class="overlay"></div>
+        <div class="stay-updated-content">
+            <h2>Stay Updated</h2>
+            <p>Stay up to date on our entrepreneurs, events, research and more.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Reach Us</a></li>
+                    <li><a href="involved.html">Get Involved</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <div class="contact-info">
+                    <p><span>Address:</span> Plot 2b Insha Allah Street, Off Ramat Crescent, Ogudu</p>
+                    <p><span>Email:</span> info@nerdzfactory.org</p>
+                    <p><span>Phone:</span> +234 8108269069</p>
+                </div>
+            </div>
+            <div class="footer-section social-section">
+                <div class="social-links">
+                    <a href="https://www.facebook.com/nerdzfactoryorg/" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/nerdzfactoryorg?t=nNIe24BD69MhKHI2uW7aDg&s=09" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/nerdzfactoryorg?igshid=YmMyMTA2M2Y%3D" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/nerdzfactoryorg/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/@nerdzfactoryfoundation4932" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2025 NerdzFactory Foundation</p>
+        </div>
+    </footer>
+    <script src="./js/main.js"></script>
+    <script>
+        // Blog API functionality
+        class BlogAPI {
+            constructor() {
+                this.baseURL = 'https://nerdzfactory.org/wp-json/wp/v2';
+                this.postsPerPage = 6;
+                this.currentPage = 1;
+                this.blogGrid = document.getElementById('blogGrid');
+                this.loadingSpinner = document.getElementById('loadingSpinner');
+                this.paginationContainer = document.getElementById('blogPagination');
+                this.postsCounter = document.getElementById('postsCounter');
+                this.init();
+            }
+
+            async init() {
+                await this.loadPosts();
+                this.setupEventListeners();
+            }
+
+            async loadPosts() {
+                try {
+                    this.showLoading(true);
+                    
+                    // Always filter for Articles category posts only
+                    const articlesCategoryId = await this.getCategoryId('Articles');
+                    let url = `${this.baseURL}/posts?per_page=${this.postsPerPage}&page=${this.currentPage}&_embed`;
+                    
+                    if (articlesCategoryId) {
+                        url += `&categories=${articlesCategoryId}`;
+                    } else {
+                        // If Articles category not found, show no posts
+                        this.renderPosts([]);
+                        this.renderPagination(0);
+                        this.showLoading(false);
+                        return;
+                    }
+
+                    const response = await fetch(url);
+                    const posts = await response.json();
+                    const totalPosts = parseInt(response.headers.get('X-WP-Total')) || 0;
+                    const totalPages = parseInt(response.headers.get('X-WP-TotalPages')) || 0;
+
+                    // Additional client-side filtering to ensure only Articles posts
+                    const articlesPosts = posts.filter(post => {
+                        const categories = post._embedded?.['wp:term']?.[0] || [];
+                        return categories.some(cat => cat.name === 'Articles');
+                    });
+
+                    this.renderPosts(articlesPosts);
+                    this.renderPagination(totalPages);
+                    this.renderPostsCounter(totalPosts, this.currentPage, totalPages);
+                    
+                } catch (error) {
+                    console.error('Error loading posts:', error);
+                    this.showError();
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            async getCategoryId(categoryName) {
+                try {
+                    const response = await fetch(`${this.baseURL}/categories?search=${encodeURIComponent(categoryName)}`);
+                    const categories = await response.json();
+                    return categories.length > 0 ? categories[0].id : null;
+                } catch (error) {
+                    console.error('Error getting category ID:', error);
+                    return null;
+                }
+            }
+
+            renderPosts(posts) {
+                if (posts.length === 0) {
+                    this.blogGrid.innerHTML = `
+                        <div class="no-posts">
+                            <h3>No Articles Found</h3>
+                            <p>No articles are currently available.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                this.blogGrid.innerHTML = posts.map(post => {
+                    const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 
+                                        'https://nerdzfactory.org/wp-content/uploads/2023/04/FM_03445-2.jpg';
+                    
+                    const categories = post._embedded?.['wp:term']?.[0] || [];
+                    const categoryName = categories.length > 0 ? categories[0].name : 'Articles';
+                    
+                    const date = new Date(post.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    const excerpt = post.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
+
+                    return `
+                        <article class="blog-card" data-category="${categoryName}">
+                            <div class="blog-image">
+                                <img src="${featuredImage}" alt="${post.title.rendered}">
+                            </div>
+                            <div class="blog-content">
+                                <div class="blog-meta">
+                                    <span class="blog-category">${categoryName}</span>
+                                    <span class="blog-date">${date}</span>
+                                </div>
+                                <h3>${post.title.rendered}</h3>
+                                <p>${excerpt}</p>
+                                <a href="${post.link}" class="read-more" target="_blank">Read More</a>
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+            }
+
+            renderPagination(totalPages) {
+                if (totalPages <= 1) {
+                    this.paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '';
+                
+                // Previous button
+                if (this.currentPage > 1) {
+                    paginationHTML += `<button class="pagination-btn prev" data-page="${this.currentPage - 1}">Previous</button>`;
+                }
+
+                // Page numbers with smart ellipsis
+                for (let i = 1; i <= totalPages; i++) {
+                    // Show first page, last page, current page, and pages around current
+                    if (i === 1 || 
+                        i === totalPages || 
+                        (i >= this.currentPage - 2 && i <= this.currentPage + 2)) {
+                        paginationHTML += `<button class="pagination-btn ${i === this.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+                    } else if (i === this.currentPage - 3 || i === this.currentPage + 3) {
+                        paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+                    }
+                }
+
+                // Next button
+                if (this.currentPage < totalPages) {
+                    paginationHTML += `<button class="pagination-btn next" data-page="${this.currentPage + 1}">Next</button>`;
+                }
+
+                this.paginationContainer.innerHTML = paginationHTML;
+            }
+
+            renderPostsCounter(totalPosts, currentPage, totalPages) {
+                if (this.postsCounter) {
+                    this.postsCounter.innerHTML = `
+                        Showing ${currentPage * this.postsPerPage - this.postsPerPage + 1} to ${Math.min(currentPage * this.postsPerPage, totalPosts)} of ${totalPosts} Articles
+                    `;
+                }
+            }
+
+            setupEventListeners() {
+                // Pagination buttons only (no filtering needed)
+                this.paginationContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('pagination-btn')) {
+                        this.currentPage = parseInt(e.target.getAttribute('data-page'));
+                        this.loadPosts();
+                    }
+                });
+            }
+
+            showLoading(show) {
+                this.loadingSpinner.style.display = show ? 'flex' : 'none';
+                this.blogGrid.style.display = show ? 'none' : 'grid';
+            }
+
+            showError() {
+                this.blogGrid.innerHTML = `
+                    <div class="error-message">
+                        <h3>Error Loading Articles</h3>
+                        <p>Sorry, we couldn't load the articles at this time. Please try again later.</p>
+                        <button onclick="location.reload()" class="retry-btn">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize blog API when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new BlogAPI();
+        });
+    </script>
+</body>
+</html> 
