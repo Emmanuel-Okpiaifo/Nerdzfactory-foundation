@@ -1,0 +1,351 @@
+/* ================================================================
+   Light & dark theme — site-wide semantic tokens
+   ================================================================ */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --theme-bg: #f5f7fa;
+  --theme-bg-alt: #eef1f6;
+  --theme-surface: #ffffff;
+  --theme-surface-raised: #ffffff;
+  --theme-text: #0f112c;
+  --theme-text-muted: #434861;
+  --theme-border: #e2e8f0;
+  --theme-nav-bg: #ffffff;
+  --theme-nav-text: #0f112c;
+  --theme-topbar-bg: #0f112c;
+  --theme-footer-bg: #0f112c;
+  --theme-input-bg: #f5f7fa;
+  --theme-shadow: rgba(15, 17, 44, 0.08);
+  --theme-shadow-lg: rgba(15, 17, 44, 0.14);
+  --theme-card-hover: rgba(33, 140, 204, 0.08);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --theme-bg: #0a0b1a;
+  --theme-bg-alt: #0f112c;
+  --theme-surface: #12142b;
+  --theme-surface-raised: #1a1d3d;
+  --theme-text: #f1f5f9;
+  --theme-text-muted: #c5d0e0;
+  --theme-border: #2a2d4a;
+  --theme-nav-bg: #0f112c;
+  --theme-nav-text: #f1f5f9;
+  --theme-topbar-bg: #060712;
+  --theme-footer-bg: #060712;
+  --theme-input-bg: #1a1d3d;
+  --theme-shadow: rgba(0, 0, 0, 0.35);
+  --theme-shadow-lg: rgba(0, 0, 0, 0.5);
+  --theme-card-hover: rgba(33, 140, 204, 0.15);
+}
+
+body {
+  background: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* ---- Theme toggle ---- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.theme-toggle:hover {
+  background: rgba(33, 140, 204, 0.35);
+  border-color: var(--nf-blue-ivy);
+}
+
+.top-bar .theme-toggle {
+  flex-shrink: 0;
+}
+
+/* ---- Header & footer ---- */
+[data-theme='dark'] nav {
+  background-color: var(--theme-nav-bg) !important;
+  box-shadow: 0 2px 12px var(--theme-shadow) !important;
+}
+
+[data-theme='dark'] nav ul li a {
+  color: var(--theme-nav-text) !important;
+}
+
+[data-theme='dark'] nav ul li a:hover {
+  color: var(--nf-blue-ivy) !important;
+}
+
+[data-theme='dark'] .top-bar {
+  background-color: var(--theme-topbar-bg) !important;
+}
+
+[data-theme='dark'] footer {
+  background-color: var(--theme-footer-bg) !important;
+}
+
+/* ---- Legacy content sections ---- */
+[data-theme='dark'] .about-content,
+[data-theme='dark'] .about-text-content,
+[data-theme='dark'] .programs-section,
+[data-theme='dark'] .programs-content,
+[data-theme='dark'] .contact-content,
+[data-theme='dark'] .contact-form-section,
+[data-theme='dark'] .involved-content,
+[data-theme='dark'] .careers-content,
+[data-theme='dark'] .gallery-section,
+[data-theme='dark'] .blog-content,
+[data-theme='dark'] .focus-areas,
+[data-theme='dark'] .focus-container,
+[data-theme='dark'] .mission-section,
+[data-theme='dark'] .values-section,
+[data-theme='dark'] .team-section,
+[data-theme='dark'] .program-details,
+[data-theme='dark'] .content-section {
+  background-color: var(--theme-bg) !important;
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .focus-card,
+[data-theme='dark'] .program-card,
+[data-theme='dark'] .value-card,
+[data-theme='dark'] .team-card,
+[data-theme='dark'] .blog-card,
+[data-theme='dark'] .career-card,
+[data-theme='dark'] .gallery-item,
+[data-theme='dark'] .involved-card {
+  background: var(--theme-surface) !important;
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+  box-shadow: 0 4px 20px var(--theme-shadow);
+}
+
+[data-theme='dark'] .about-text-content h2,
+[data-theme='dark'] .about-text-content p,
+[data-theme='dark'] .focus-card h3,
+[data-theme='dark'] .focus-card p,
+[data-theme='dark'] .blog-content h3,
+[data-theme='dark'] .blog-content p,
+[data-theme='dark'] .program-card h3,
+[data-theme='dark'] .program-card p,
+[data-theme='dark'] main h2,
+[data-theme='dark'] main h3,
+[data-theme='dark'] main h4 {
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .blog-card .blog-content {
+  background: transparent !important;
+}
+
+[data-theme='dark'] .filter-btn,
+[data-theme='dark'] .pagination-btn {
+  background: var(--theme-surface) !important;
+  border-color: var(--theme-border) !important;
+  color: var(--theme-text) !important;
+}
+
+[data-theme='dark'] .filter-btn.active,
+[data-theme='dark'] .pagination-btn.active,
+[data-theme='dark'] .pagination-btn:hover:not(:disabled) {
+  background: var(--nf-blue-ivy) !important;
+  border-color: var(--nf-blue-ivy) !important;
+  color: #fff !important;
+}
+
+[data-theme='dark'] .mobile-menu-btn {
+  color: var(--theme-nav-text);
+}
+
+/* ---- Opportunities pages ---- */
+[data-theme='dark'] .opp-page,
+[data-theme='dark'] .opp-detail-page {
+  --opp-bg: var(--theme-bg);
+  --opp-surface: var(--theme-surface);
+  --opp-border: var(--theme-border);
+  --opp-text: var(--theme-text);
+  --opp-muted: var(--theme-text-muted);
+  --opp-mirage: var(--theme-text);
+  --opp-shadow: 0 4px 24px var(--theme-shadow);
+  --opp-shadow-lg: 0 16px 48px var(--theme-shadow-lg);
+
+  --d-bg: var(--theme-bg);
+  --d-surface: var(--theme-surface);
+  --d-border: var(--theme-border);
+  --d-muted: var(--theme-text-muted);
+  --d-mirage: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(33, 140, 204, 0.1), transparent),
+    var(--theme-bg);
+}
+
+[data-theme='dark'] .opp-card,
+[data-theme='dark'] .opp-featured,
+[data-theme='dark'] .opp-toolbar-panel,
+[data-theme='dark'] .opp-empty,
+[data-theme='dark'] .opp-detail-intro__card,
+[data-theme='dark'] .opp-detail-aside__card,
+[data-theme='dark'] .opp-detail-related-card,
+[data-theme='dark'] .opp-detail-related,
+[data-theme='dark'] .opp-detail-facts {
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+}
+
+[data-theme='dark'] .opp-search input,
+[data-theme='dark'] .opp-filter {
+  background: var(--theme-input-bg);
+  border-color: var(--theme-border);
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-filter.is-active {
+  background: var(--nf-mirage);
+  border-color: var(--nf-mirage);
+}
+
+[data-theme='dark'] .opp-section-head h2,
+[data-theme='dark'] .opp-card__body h3,
+[data-theme='dark'] .opp-featured__body h3,
+[data-theme='dark'] .opp-detail-intro__main h1,
+[data-theme='dark'] .opp-detail-article__head h2,
+[data-theme='dark'] .opp-detail-related__head h2 {
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-detail-prose {
+  color: var(--theme-text-muted);
+}
+
+[data-theme='dark'] .opp-detail-prose h2,
+[data-theme='dark'] .opp-detail-prose h3,
+[data-theme='dark'] .opp-detail-prose h4,
+[data-theme='dark'] .opp-detail-prose strong {
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-detail-aside__browse-item:hover {
+  background: rgba(33, 140, 204, 0.12);
+  border-color: rgba(33, 140, 204, 0.3);
+}
+
+[data-theme='dark'] .opp-detail-aside__browse-title,
+[data-theme='dark'] .opp-detail-aside__browse-name {
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-detail-related-card__body h3 {
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-detail-mobile-cta {
+  background: rgba(18, 20, 43, 0.96);
+  border-color: var(--theme-border);
+}
+
+[data-theme='dark'] .opp-detail-taglist em {
+  background: var(--theme-surface-raised);
+  border-color: var(--theme-border);
+  color: var(--theme-text-muted);
+}
+
+[data-theme='dark'] .opp-detail-fact > i {
+  background: rgba(33, 140, 204, 0.15);
+}
+
+[data-theme='dark'] .opp-detail-fact strong {
+  color: var(--theme-text);
+}
+
+/* ---- Site-wide contrast: legacy faint text ---- */
+[data-theme='dark'] .about-text-content p,
+[data-theme='dark'] .focus-card p,
+[data-theme='dark'] .value-card p,
+[data-theme='dark'] .team-card p,
+[data-theme='dark'] .program-card p,
+[data-theme='dark'] .program-details p,
+[data-theme='dark'] .programs-content p,
+[data-theme='dark'] .career-card p,
+[data-theme='dark'] .careers-content p,
+[data-theme='dark'] .involved-card p,
+[data-theme='dark'] .involved-content p,
+[data-theme='dark'] .contact-content p,
+[data-theme='dark'] .gallery-section p,
+[data-theme='dark'] .mission-section p,
+[data-theme='dark'] .content-section p,
+[data-theme='dark'] .blog-content > .container > p,
+[data-theme='dark'] .blog-card .blog-content p,
+[data-theme='dark'] .blog-meta,
+[data-theme='dark'] .blog-date,
+[data-theme='dark'] .posts-counter,
+[data-theme='dark'] .no-posts p,
+[data-theme='dark'] .loading-spinner p,
+[data-theme='dark'] .hero-content p,
+[data-theme='dark'] .about-hero p,
+[data-theme='dark'] .contact-hero p,
+[data-theme='dark'] .stat-label,
+[data-theme='dark'] .testimonial-text,
+[data-theme='dark'] .faq-answer,
+[data-theme='dark'] .timeline-content p,
+[data-theme='dark'] .form-hint,
+[data-theme='dark'] .contact-info p,
+[data-theme='dark'] label {
+  color: var(--theme-text-muted) !important;
+}
+
+[data-theme='dark'] .blog-card .blog-content h3,
+[data-theme='dark'] .no-posts h3,
+[data-theme='dark'] .focus-card h3,
+[data-theme='dark'] .value-card h3,
+[data-theme='dark'] .team-card h3,
+[data-theme='dark'] .program-card h3,
+[data-theme='dark'] .career-card h3,
+[data-theme='dark'] .involved-card h3,
+[data-theme='dark'] .about-text-content h2,
+[data-theme='dark'] .mission-section h2,
+[data-theme='dark'] .hero-content h1 {
+  color: var(--theme-text) !important;
+}
+
+[data-theme='dark'] .filter-btn:not(.active),
+[data-theme='dark'] .pagination-btn:not(.active):not(:hover) {
+  color: var(--theme-text) !important;
+}
+
+[data-theme='light'] .blog-meta,
+[data-theme='light'] .blog-date,
+[data-theme='light'] .posts-counter,
+[data-theme='light'] .blog-card .blog-content p,
+[data-theme='light'] .loading-spinner p,
+[data-theme='light'] .no-posts p {
+  color: var(--theme-text-muted);
+}
+
+[data-theme='light'] .blog-card .blog-content h3,
+[data-theme='light'] .no-posts h3 {
+  color: var(--theme-text);
+}
+
+[data-theme='dark'] .opp-detail-apply-banner p {
+  opacity: 0.92;
+  color: #fff;
+}
+
+[data-theme='dark'] .opp-detail-lead {
+  color: var(--theme-text-muted);
+}

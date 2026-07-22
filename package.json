@@ -1,0 +1,29 @@
+{
+  "name": "nerdzfactory-org",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:admin": "node scripts/build-admin.mjs",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "dev:cms": "npm run dev --prefix cms",
+    "start:cms": "npm start --prefix cms",
+    "import:opportunities": "node scripts/import-wp-opportunities.mjs",
+    "migrate:cms": "node scripts/migrate-json-to-cms.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "oxlint": "^1.71.0",
+    "vite": "^8.1.1"
+  }
+}

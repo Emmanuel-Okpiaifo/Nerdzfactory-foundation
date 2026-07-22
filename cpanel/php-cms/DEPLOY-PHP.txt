@@ -1,0 +1,76 @@
+# PHP Opportunities CMS (no Node.js)
+
+Use this on Softaculous / cPanel when **Setup Node.js App** is not available.
+
+## Upload layout
+
+```
+/home/nerdzfa1/
+└── public_html/
+    ├── nf-cms/                 ← upload contents of cpanel/php-cms/
+    │   ├── index.php
+    │   ├── config.php          ← copy from config.example.php
+    │   ├── lib/
+    │   └── data/
+    │       └── store.json      ← copy from cms/data/store.json
+    ├── uploads/
+    │   └── opportunities/      ← empty folder, permissions 755 or 775
+    ├── admin/                  ← contents of dist-admin/
+    ├── nf-app/                 ← React dist/ (already done)
+    ├── nf-proxy.php            ← optional; not needed with PHP CMS
+    └── .htaccess
+```
+
+## 1. Copy files in File Manager
+
+1. Create folder `public_html/nf-cms/`
+2. Upload: `index.php`, `lib/` folder, `config.example.php`
+3. Rename `config.example.php` → `config.php`
+4. Edit `config.php`:
+   - Set a strong `JWT_SECRET`
+   - Leave `DATA_FILE` as `__DIR__ . '/data/store.json'` if using the layout above
+5. Create `public_html/nf-cms/data/`
+6. Upload your `cms/data/store.json` into `public_html/nf-cms/data/store.json`
+7. Create `public_html/uploads/opportunities/` (writable)
+8. Upload **contents** of `dist-admin/` into `public_html/admin/`
+
+## 2. `.htaccess` (top of `public_html/.htaccess`)
+
+Replace the old Node/proxy / NerdzFactory block with:
+
+```apache
+# ---- NerdzFactory Opportunities (PHP CMS) ----
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Pass Authorization header to PHP (needed for admin Publish)
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteRule ^api/(.*)$ /nf-cms/index.php?nf_path=api/$1 [L,QSA]
+
+# /admin → index.html only (do NOT rewrite real files like admin.js or a loop/500 happens)
+RewriteRule ^admin/?$ /admin/index.html [L]
+
+RewriteRule ^opportunities/?$ /nf-app/index.html [L]
+RewriteRule ^opportunities/(.*)$ /nf-app/index.html [L]
+</IfModule>
+# ---- End NerdzFactory ----
+```
+
+**Important:** Remove any old line like `RewriteRule ^admin/(.*)$ /admin/$1` — that causes a **500 Internal Server Error** (rewrite loop).
+
+Uploaded images under `/uploads/opportunities/` are normal static files — no rewrite needed.
+
+## 3. Test
+
+1. `https://nerdzfactory.org/api/health` → `{"status":"ok","service":"nerdzfactory-opportunities-cms-php"}`
+2. `https://nerdzfactory.org/opportunities` → listings appear
+3. `https://nerdzfactory.org/admin` → login with admin from store.json  
+   (default if empty users: `admin@nerdzfactory.org` / `changeme123`)
+
+## Notes
+
+- No Node / Application Manager / Setup Node.js App required.
+- Keep a backup of `nf-cms/data/store.json` and `uploads/`.
+- After WordPress updates, confirm the NerdzFactory block is still at the **top** of `.htaccess`.

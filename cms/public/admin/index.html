@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opportunities CMS — NerdzFactory</title>
+  <link rel="icon" href="https://nerdzfactory.org/wp-content/uploads/2023/04/cropped-nf_logo-1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Login -->
+    <div id="loginView" class="login-view hidden">
+      <div class="login-shell">
+        <header class="login-topbar">
+          <img src="https://nerdzfactory.org/wp-content/uploads/2023/04/nf_logo-1-300x64.png" alt="NerdzFactory" class="login-topbar__logo">
+          <span class="login-topbar__tagline">...enabling opportunities</span>
+        </header>
+        <div class="login-card">
+          <span class="login-eyebrow">Content management</span>
+          <h1>Opportunities CMS</h1>
+          <p class="login-subtitle">Sign in to publish and manage opportunities on nerdzfactory.org</p>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" required autocomplete="email" placeholder="you@nerdzfactory.org">
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="••••••••">
+            </div>
+            <p id="loginError" class="form-error hidden"></p>
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+          </form>
+          <a href="/" class="login-back-link" data-public-href="/"><i class="fas fa-arrow-left"></i> Back to website</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardView" class="dashboard hidden">
+      <header class="admin-header">
+        <div class="admin-topbar">
+          <span class="admin-topbar__label">Opportunities CMS</span>
+          <div class="admin-topbar__user">
+            <span id="userName">—</span>
+            <small id="userRole">—</small>
+            <button id="logoutBtn" class="btn btn-ghost btn-sm" type="button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+          </div>
+        </div>
+        <div class="admin-nav">
+          <a href="/" class="admin-nav__brand" title="View public website" data-public-href="/">
+            <img src="https://nerdzfactory.org/wp-content/uploads/2023/04/nf_logo-1-300x64.png" alt="NerdzFactory">
+          </a>
+          <nav class="admin-nav__links" aria-label="CMS sections">
+            <button class="nav-item active" type="button" data-view="list"><i class="fas fa-briefcase"></i> Opportunities</button>
+            <button class="nav-item" type="button" data-view="new"><i class="fas fa-plus-circle"></i> New Post</button>
+            <button class="nav-item admin-only hidden" type="button" data-view="users"><i class="fas fa-users"></i> Team</button>
+          </nav>
+          <a href="/opportunities" class="btn btn-primary btn-sm admin-nav__cta" target="_blank" rel="noopener" data-public-href="/opportunities">
+            View live page <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- List view -->
+        <section id="listPanel" class="panel">
+          <header class="panel-header">
+            <div>
+              <span class="panel-eyebrow">Manage</span>
+              <h2>All Opportunities</h2>
+              <p>Published and draft listings shown on the public opportunities page</p>
+            </div>
+            <button class="btn btn-primary" type="button" id="quickNewBtn"><i class="fas fa-plus"></i> New Opportunity</button>
+          </header>
+          <div class="toolbar">
+            <input type="search" id="adminSearch" placeholder="Search opportunities..." class="search-input">
+            <select id="adminStatusFilter" class="select-input">
+              <option value="all">All statuses</option>
+              <option value="published">Published</option>
+              <option value="draft">Drafts</option>
+            </select>
+          </div>
+          <div id="adminList" class="admin-list"></div>
+        </section>
+
+        <!-- Form view -->
+        <section id="formPanel" class="panel hidden">
+          <header class="panel-header">
+            <div>
+              <span class="panel-eyebrow">Editor</span>
+              <h2 id="formTitle">New Opportunity</h2>
+              <p>Everything here appears on the public detail page when published</p>
+            </div>
+            <button class="btn btn-ghost" type="button" id="backToListBtn"><i class="fas fa-arrow-left"></i> Back</button>
+          </header>
+          <form id="opportunityForm" class="opp-form">
+            <input type="hidden" id="oppId">
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="oppTitle">Title *</label>
+                <input type="text" id="oppTitle" required placeholder="e.g. Women-Led Business Grant 2026">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="oppSlug">URL slug</label>
+                <input type="text" id="oppSlug" placeholder="auto-generated-from-title" pattern="[a-z0-9]+(?:-[a-z0-9]+)*">
+                <small class="field-hint">Public URL: /opportunities/your-slug</small>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label>Featured image</label>
+                <div class="image-upload">
+                  <div id="imagePreview" class="image-preview hidden">
+                    <img id="imagePreviewImg" src="" alt="Preview">
+                    <div class="image-preview__actions">
+                      <button type="button" class="btn btn-secondary btn-sm" id="changeImageBtn"><i class="fas fa-crop"></i> Crop / change</button>
+                      <button type="button" class="btn btn-ghost btn-sm" id="removeImageBtn"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                  <div id="imageDropzone" class="image-dropzone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop an image, or click to browse</p>
+                    <small>JPG, PNG, or WebP — up to 10 MB. Crop freely or use the full image.</small>
+                    <input type="file" id="imageFileInput" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                  </div>
+                  <input type="hidden" id="oppImage">
+                  <div class="form-group image-alt-field">
+                    <label for="oppImageAlt">Image alt text</label>
+                    <input type="text" id="oppImageAlt" placeholder="Describe the image for accessibility">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="oppSummary">Short description</label>
+                <textarea id="oppSummary" rows="3" placeholder="Brief summary shown on the opportunities card..."></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label>Full content (detail page)</label>
+                <p id="contentModeNote" class="field-hint hidden"></p>
+                <div id="oppContentEditorWrap">
+                  <div id="oppContentEditor" class="rich-editor"></div>
+                </div>
+                <textarea id="oppContentSource" class="content-source hidden" rows="16" placeholder="HTML content..."></textarea>
+                <input type="hidden" id="oppContent">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="oppApplyUrl">Apply / Learn more URL</label>
+                <input type="text" id="oppApplyUrl" placeholder="https://... or mailto:... (required to publish)">
+                <small class="field-hint">Required when publishing. Drafts can leave this blank.</small>
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="oppCategory">Category</label>
+                <select id="oppCategory"></select>
+              </div>
+              <div class="form-group">
+                <label for="oppLocation">Location</label>
+                <select id="oppLocation"></select>
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="oppDeadline">Application deadline</label>
+                <input type="date" id="oppDeadline">
+              </div>
+              <div class="form-group">
+                <label for="oppTags">Tags (comma-separated)</label>
+                <input type="text" id="oppTags" placeholder="Youth, Grant, Remote">
+              </div>
+            </div>
+            <div class="form-row toggles">
+              <label class="checkbox-label">
+                <input type="checkbox" id="oppFeatured"> Feature this opportunity
+              </label>
+              <div class="form-group inline">
+                <label for="oppStatus">Status</label>
+                <select id="oppStatus">
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+              </div>
+            </div>
+            <p id="formError" class="form-error hidden"></p>
+            <div class="form-actions">
+              <button type="button" class="btn btn-danger hidden" id="deleteBtn"><i class="fas fa-trash"></i> Delete</button>
+              <div class="form-actions-right">
+                <button type="button" class="btn btn-secondary" id="saveDraftBtn">Save as Draft</button>
+                <button type="submit" class="btn btn-primary">Publish</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Users panel -->
+        <section id="usersPanel" class="panel hidden">
+          <header class="panel-header">
+            <div>
+              <span class="panel-eyebrow">Administration</span>
+              <h2>Team Members</h2>
+              <p>Invite colleagues who can post opportunities</p>
+            </div>
+          </header>
+          <form id="userForm" class="user-form">
+            <div class="form-row three-col">
+              <div class="form-group">
+                <label for="newUserName">Name</label>
+                <input type="text" id="newUserName" required placeholder="Full name">
+              </div>
+              <div class="form-group">
+                <label for="newUserEmail">Email</label>
+                <input type="email" id="newUserEmail" required placeholder="email@nerdzfactory.org">
+              </div>
+              <div class="form-group">
+                <label for="newUserPassword">Password</label>
+                <input type="password" id="newUserPassword" required minlength="8" placeholder="Min. 8 characters">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Team Member</button>
+            <p id="userFormError" class="form-error hidden"></p>
+          </form>
+          <div id="usersList" class="users-list"></div>
+        </section>
+      </main>
+
+      <footer class="admin-footer">
+        <p>NerdzFactory Foundation — Opportunities CMS</p>
+        <a href="/" target="_blank" rel="noopener" data-public-href="/">nerdzfactory.org</a>
+      </footer>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" aria-live="polite"></div>
+
+  <div id="appDialog" class="app-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="appDialogTitle">
+    <div class="app-dialog__backdrop" data-dialog-dismiss></div>
+    <div class="app-dialog__card">
+      <div class="app-dialog__icon" id="appDialogIcon" aria-hidden="true"></div>
+      <h3 id="appDialogTitle" class="app-dialog__title"></h3>
+      <p id="appDialogMessage" class="app-dialog__message"></p>
+      <div class="app-dialog__actions" id="appDialogActions"></div>
+    </div>
+  </div>
+
+  <div id="cropModal" class="crop-modal hidden">
+    <div class="crop-modal__dialog">
+      <header class="crop-modal__header">
+        <h3>Crop featured image</h3>
+        <p>Drag to select the area to show. Free-form crop, or use the full image.</p>
+      </header>
+      <div class="crop-modal__body">
+        <img id="cropImage" src="" alt="Crop preview">
+      </div>
+      <footer class="crop-modal__footer">
+        <button type="button" class="btn btn-ghost" id="cropCancelBtn">Cancel</button>
+        <button type="button" class="btn btn-secondary" id="cropFullBtn">Use full image</button>
+        <button type="button" class="btn btn-primary" id="cropApplyBtn">Apply crop</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

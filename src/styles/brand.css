@@ -1,0 +1,112 @@
+/* ================================================================
+   Site-wide brand overrides (loaded after legacy.css)
+   Maps legacy styles to official palette & typography
+   ================================================================ */
+
+/* Header & navigation */
+.top-bar {
+  background-color: var(--nf-mirage) !important;
+}
+
+nav ul li a {
+  color: var(--nf-mirage) !important;
+}
+
+nav ul li a:hover,
+.social-icons a:hover {
+  color: var(--nf-blue-ivy) !important;
+}
+
+.apply-btn {
+  background-color: var(--nf-blue-ivy) !important;
+  font-family: var(--nf-font-primary);
+  font-weight: 600;
+}
+
+.apply-btn:hover {
+  background-color: var(--nf-blue-ivy-dark) !important;
+}
+
+/* Blog & shared UI patterns */
+.blog-category,
+.filter-btn.active,
+.pagination-btn.active,
+.pagination-btn:hover:not(:disabled),
+.read-more,
+.blog-card .read-more,
+.posts-counter,
+.careers-card .apply-now,
+.opportunity-tag {
+  color: var(--nf-blue-ivy);
+}
+
+.blog-category,
+.filter-btn.active,
+.pagination-btn.active,
+.pagination-btn:hover:not(:disabled) {
+  background: var(--nf-blue-ivy) !important;
+  border-color: var(--nf-blue-ivy) !important;
+  color: var(--nf-white) !important;
+}
+
+.read-more:hover {
+  color: var(--nf-blue-ivy-dark) !important;
+}
+
+/* Footer & section accents */
+footer {
+  background-color: var(--nf-mirage) !important;
+}
+
+/* Hero sections across legacy pages */
+.hero h1::before,
+.about-hero h1,
+.contact-hero .hero-content h1 {
+  font-family: var(--nf-font-primary);
+}
+
+/* Buttons & CTAs found on legacy pages */
+.cta-button,
+.submit-btn,
+.donate-btn,
+.involved-btn,
+.program-btn,
+.learn-more-btn,
+.get-started-btn {
+  background-color: var(--nf-blue-ivy) !important;
+  border-color: var(--nf-blue-ivy) !important;
+}
+
+.cta-button:hover,
+.submit-btn:hover,
+.donate-btn:hover,
+.involved-btn:hover,
+.program-btn:hover,
+.learn-more-btn:hover,
+.get-started-btn:hover {
+  background-color: var(--nf-blue-ivy-dark) !important;
+}
+
+/* Spinner / loading */
+.spinner,
+.loading-spinner .spinner {
+  border-top-color: var(--nf-blue-ivy) !important;
+}
+
+/* Stay updated / newsletter */
+.stay-updated,
+.newsletter-section {
+  background: var(--nf-mirage) !important;
+}
+
+.stay-updated button,
+.newsletter-form button {
+  background: var(--nf-blue-ivy) !important;
+}
+
+/* Generic link hovers in content areas */
+.blog-content a:hover,
+.about-content a:hover,
+.programs-content a:hover {
+  color: var(--nf-blue-ivy) !important;
+}

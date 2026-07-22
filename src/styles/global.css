@@ -1,0 +1,48 @@
+/* ================================================================
+   NerdzFactory Foundation — brand design tokens
+   Source: Foundation Brand Guidelines
+   Blue Ivy #218CCC · Mirage #0F112C · Montserrat · Georgia
+   ================================================================ */
+
+:root {
+  --nf-blue-ivy: #218ccc;
+  --nf-blue-ivy-dark: #1a75b0;
+  --nf-blue-ivy-light: #e8f4fc;
+  --nf-mirage: #0f112c;
+  --nf-mirage-soft: #1a1d3d;
+  --nf-black: #000000;
+  --nf-white: #ffffff;
+  --nf-font-primary: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --nf-font-secondary: Georgia, 'Times New Roman', serif;
+}
+
+body {
+  font-family: var(--nf-font-primary);
+  overflow-x: clip;
+  max-width: 100%;
+  color: var(--theme-text, var(--nf-mirage));
+  background: var(--theme-bg, #f5f7fa);
+}
+
+html {
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--nf-font-primary);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+a.active-nav {
+  color: var(--nf-blue-ivy) !important;
+  font-weight: 600;
+}
